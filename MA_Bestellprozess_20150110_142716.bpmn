@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.jboss.org/drools" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="Definition" exporter="camunda modeler" exporterVersion="2.7.0" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.bamero.de/bpmtouch" typeLanguage="http://www.java.com/javaTypes">
+  <process id="_83b559f6-8ada-4727-be82-48a5936f0390" name="MA Bestellprozess" isExecutable="false" processType="Private">
+    <documentation>author : Michael Straub  description : Bestellprozess</documentation>
+    <startEvent id="_f8111658-242a-454a-8f7f-c10583e14156" name="startEvent">
+      <outgoing>_2684b981-03e5-4351-9970-aa40e330fccd</outgoing>
+    </startEvent>
+    <sequenceFlow id="_2684b981-03e5-4351-9970-aa40e330fccd" sourceRef="_f8111658-242a-454a-8f7f-c10583e14156" targetRef="_0f9daca1-dab4-427d-a444-503127f2851e"/>
+    <userTask id="_0f9daca1-dab4-427d-a444-503127f2851e" name="Bestellung eingeben">
+      <documentation/>
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="field01" label="Test-Field 1" type="string" defaultValue="0"/>
+        </camunda:formData>
+      </extensionElements>
+      <incoming>_2684b981-03e5-4351-9970-aa40e330fccd</incoming>
+      <incoming>_70a282ac-84da-45e4-b86f-edad713540a2</incoming>
+      <outgoing>_d7bfa15b-08c1-4d5c-9c03-8ea096ef202a</outgoing>
+    </userTask>
+    <sequenceFlow id="_d7bfa15b-08c1-4d5c-9c03-8ea096ef202a" sourceRef="_0f9daca1-dab4-427d-a444-503127f2851e" targetRef="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53"/>
+    <userTask id="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" name="Bestellung genehmigen">
+      <documentation/>
+      <incoming>_d7bfa15b-08c1-4d5c-9c03-8ea096ef202a</incoming>
+      <outgoing>_8fa50218-7ac4-4af6-8b4f-b9acbf13945a</outgoing>
+    </userTask>
+    <sequenceFlow id="_8fa50218-7ac4-4af6-8b4f-b9acbf13945a" sourceRef="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" targetRef="_6035efdf-a201-4871-a24b-30229e659ba5"/>
+    <exclusiveGateway id="_6035efdf-a201-4871-a24b-30229e659ba5" name="exclusiveGateway">
+      <incoming>_8fa50218-7ac4-4af6-8b4f-b9acbf13945a</incoming>
+      <outgoing>_1d480a87-a387-4125-be9a-7da3fdb2d2a8</outgoing>
+      <outgoing>_70a282ac-84da-45e4-b86f-edad713540a2</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="_1d480a87-a387-4125-be9a-7da3fdb2d2a8" sourceRef="_6035efdf-a201-4871-a24b-30229e659ba5" targetRef="_d371402c-3538-48b3-94c3-0c755cb7ba7d"/>
+    <serviceTask id="_d371402c-3538-48b3-94c3-0c755cb7ba7d" name="Bestellung verbuchen">
+      <documentation/>
+      <incoming>_1d480a87-a387-4125-be9a-7da3fdb2d2a8</incoming>
+      <outgoing>_b6cd5fcd-d8fc-4c97-8a71-02eca2227cc0</outgoing>
+    </serviceTask>
+    <sequenceFlow id="_b6cd5fcd-d8fc-4c97-8a71-02eca2227cc0" sourceRef="_d371402c-3538-48b3-94c3-0c755cb7ba7d" targetRef="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0"/>
+    <serviceTask id="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" name="Bestellung versenden">
+      <documentation/>
+      <incoming>_b6cd5fcd-d8fc-4c97-8a71-02eca2227cc0</incoming>
+      <outgoing>_0628b367-a86c-4bde-9567-19f035780e81</outgoing>
+      <dataInputAssociation id="DataInputAssociation_1">
+        <sourceRef>DataObjectReference_1</sourceRef>
+      </dataInputAssociation>
+    </serviceTask>
+    <sequenceFlow id="_0628b367-a86c-4bde-9567-19f035780e81" sourceRef="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" targetRef="_8388822a-2ef8-4bca-a13e-9affbe62fbca"/>
+    <endEvent id="_8388822a-2ef8-4bca-a13e-9affbe62fbca" name="endEvent">
+      <incoming>_0628b367-a86c-4bde-9567-19f035780e81</incoming>
+    </endEvent>
+    <sequenceFlow id="_70a282ac-84da-45e4-b86f-edad713540a2" sourceRef="_6035efdf-a201-4871-a24b-30229e659ba5" targetRef="_0f9daca1-dab4-427d-a444-503127f2851e"/>
+    <dataObject id="DataObject_1" name="Data Object 1"/>
+    <dataObjectReference id="DataObjectReference_1" name="Data Object 1 Reference" dataObjectRef="DataObject_1">
+      <extensionElements>
+        <camunda:properties>
+          <camunda:property/>
+        </camunda:properties>
+      </extensionElements>
+    </dataObjectReference>
+    <textAnnotation id="Annotation_0f9daca1-dab4-427d-a444-503127f2851e">
+      <text><![CDATA[ Role : Mitarbeiter
+ Organisation : 
+ Cost : 
+ Time : 
+ IT-System : ]]></text>
+    </textAnnotation>
+    <association id="association_0f9daca1-dab4-427d-a444-503127f2851e" sourceRef="Annotation_0f9daca1-dab4-427d-a444-503127f2851e" targetRef="_0f9daca1-dab4-427d-a444-503127f2851e"/>
+    <textAnnotation id="Annotation_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53">
+      <text><![CDATA[ Role : Vorgesetzter
+ Organisation : 
+ Cost : 
+ Time : 
+ IT-System : ]]></text>
+    </textAnnotation>
+    <association id="association_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" sourceRef="Annotation_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" targetRef="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53"/>
+    <textAnnotation id="Annotation_d371402c-3538-48b3-94c3-0c755cb7ba7d">
+      <text><![CDATA[ Role : 
+ Organisation : 
+ Cost : 
+ Time : 
+ IT-System : ERP System]]></text>
+    </textAnnotation>
+    <association id="association_d371402c-3538-48b3-94c3-0c755cb7ba7d" sourceRef="Annotation_d371402c-3538-48b3-94c3-0c755cb7ba7d" targetRef="_d371402c-3538-48b3-94c3-0c755cb7ba7d"/>
+    <textAnnotation id="Annotation_1ebf729c-cf85-409d-a08f-fe200e0eaaa0">
+      <text><![CDATA[ Role : 
+ Organisation : 
+ Cost : 
+ Time : 
+ IT-System : Email]]></text>
+    </textAnnotation>
+    <association id="association_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" sourceRef="Annotation_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" targetRef="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0"/>
+  </process>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="_83b559f6-8ada-4727-be82-48a5936f0390">
+      <bpmndi:BPMNShape bpmnElement="_f8111658-242a-454a-8f7f-c10583e14156">
+        <dc:Bounds height="50.0" width="50.0" x="35.0" y="325.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_2684b981-03e5-4351-9970-aa40e330fccd">
+        <di:waypoint xsi:type="dc:Point" x="85.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="110.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="110.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="135.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_0f9daca1-dab4-427d-a444-503127f2851e">
+        <dc:Bounds height="100.0" width="150.0" x="135.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_0f9daca1-dab4-427d-a444-503127f2851e" bpmnElement="Annotation_0f9daca1-dab4-427d-a444-503127f2851e">
+        <dc:Bounds height="109.0" width="150.0" x="135.0" y="432.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_0f9daca1-dab4-427d-a444-503127f2851e" bpmnElement="association_0f9daca1-dab4-427d-a444-503127f2851e" sourceElement="Shape_0f9daca1-dab4-427d-a444-503127f2851e" targetElement="#//@definitions/@diagrams.0/@plane/@planeElement.2">
+        <di:waypoint xsi:type="dc:Point" x="210.0" y="541.0"/>
+        <di:waypoint xsi:type="dc:Point" x="210.0" y="400.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_d7bfa15b-08c1-4d5c-9c03-8ea096ef202a">
+        <di:waypoint xsi:type="dc:Point" x="285.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="310.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="310.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="335.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_0f9daca1-dab4-427d-a444-503127f2851e">
+        <dc:Bounds height="100.0" width="150.0" x="135.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53">
+        <dc:Bounds height="100.0" width="150.0" x="335.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" bpmnElement="Annotation_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53">
+        <dc:Bounds height="30.0" width="200.0" x="335.0" y="250.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" bpmnElement="association_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53" sourceElement="Shape_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53">
+        <di:waypoint xsi:type="dc:Point" x="435.0" y="280.0"/>
+        <di:waypoint xsi:type="dc:Point" x="410.0" y="300.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8fa50218-7ac4-4af6-8b4f-b9acbf13945a">
+        <di:waypoint xsi:type="dc:Point" x="485.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="510.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="510.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="535.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_5ce2ae16-a5ce-4783-b73c-2bca5b5b9f53">
+        <dc:Bounds height="100.0" width="150.0" x="335.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_6035efdf-a201-4871-a24b-30229e659ba5">
+        <dc:Bounds height="50.0" width="50.0" x="535.0" y="325.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_1d480a87-a387-4125-be9a-7da3fdb2d2a8">
+        <di:waypoint xsi:type="dc:Point" x="585.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="610.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="610.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="635.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_6035efdf-a201-4871-a24b-30229e659ba5">
+        <dc:Bounds height="50.0" width="50.0" x="535.0" y="325.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_d371402c-3538-48b3-94c3-0c755cb7ba7d">
+        <dc:Bounds height="100.0" width="150.0" x="635.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_d371402c-3538-48b3-94c3-0c755cb7ba7d" bpmnElement="Annotation_d371402c-3538-48b3-94c3-0c755cb7ba7d">
+        <dc:Bounds height="30.0" width="200.0" x="635.0" y="250.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_d371402c-3538-48b3-94c3-0c755cb7ba7d" bpmnElement="association_d371402c-3538-48b3-94c3-0c755cb7ba7d" sourceElement="Shape_d371402c-3538-48b3-94c3-0c755cb7ba7d">
+        <di:waypoint xsi:type="dc:Point" x="735.0" y="280.0"/>
+        <di:waypoint xsi:type="dc:Point" x="710.0" y="300.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_b6cd5fcd-d8fc-4c97-8a71-02eca2227cc0">
+        <di:waypoint xsi:type="dc:Point" x="785.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="810.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="810.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="835.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_d371402c-3538-48b3-94c3-0c755cb7ba7d">
+        <dc:Bounds height="100.0" width="150.0" x="635.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0">
+        <dc:Bounds height="100.0" width="150.0" x="835.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" bpmnElement="Annotation_1ebf729c-cf85-409d-a08f-fe200e0eaaa0">
+        <dc:Bounds height="30.0" width="200.0" x="835.0" y="250.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" bpmnElement="association_1ebf729c-cf85-409d-a08f-fe200e0eaaa0" sourceElement="Shape_1ebf729c-cf85-409d-a08f-fe200e0eaaa0">
+        <di:waypoint xsi:type="dc:Point" x="935.0" y="280.0"/>
+        <di:waypoint xsi:type="dc:Point" x="910.0" y="300.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_0628b367-a86c-4bde-9567-19f035780e81">
+        <di:waypoint xsi:type="dc:Point" x="985.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1010.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1010.0" y="350.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1035.0" y="350.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_1ebf729c-cf85-409d-a08f-fe200e0eaaa0">
+        <dc:Bounds height="100.0" width="150.0" x="835.0" y="300.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8388822a-2ef8-4bca-a13e-9affbe62fbca">
+        <dc:Bounds height="50.0" width="50.0" x="1035.0" y="325.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_70a282ac-84da-45e4-b86f-edad713540a2">
+        <di:waypoint xsi:type="dc:Point" x="560.0" y="325.0"/>
+        <di:waypoint xsi:type="dc:Point" x="560.0" y="217.0"/>
+        <di:waypoint xsi:type="dc:Point" x="210.0" y="217.0"/>
+        <di:waypoint xsi:type="dc:Point" x="210.0" y="300.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="_6035efdf-a201-4871-a24b-30229e659ba5">
+        <dc:Bounds height="50.0" width="50.0" x="535.0" y="325.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_2" bpmnElement="DataObjectReference_1">
+        <dc:Bounds height="50.0" width="36.0" x="892.0" y="468.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="148.0" x="836.0" y="523.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation_1" bpmnElement="DataInputAssociation_1" sourceElement="_BPMNShape_DataObjectReference_2" targetElement="#//@definitions/@diagrams.0/@plane/@planeElement.20">
+        <di:waypoint xsi:type="dc:Point" x="910.0" y="468.0"/>
+        <di:waypoint xsi:type="dc:Point" x="910.0" y="400.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
